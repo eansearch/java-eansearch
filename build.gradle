@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.relaxedcommunications'
+version = '1.0.0'
+
+// Target Java 21
+sourceCompatibility = '21'
+targetCompatibility = '21'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+}
+
+// Compatible way to declare the main class for older/newer Gradle
+mainClassName = 'com.relaxedcommunications.eansearch.Example'
