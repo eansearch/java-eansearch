@@ -3,15 +3,23 @@ package com.relaxedcommunications.eansearch;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Extended product information (adds Google category id).
+ * Extended product information that includes Google category id in addition to
+ * the base {@link Product} fields.
  */
 public class ProductFull extends Product {
+    /** Google product taxonomy category id if available. */
     public int googleCategoryId;
 
     public ProductFull() {
         super();
     }
 
+    /**
+     * Parse a JSON object into a {@link ProductFull} instance.
+     *
+     * @param node JSON object node
+     * @return parsed ProductFull or {@code null} on invalid input
+     */
     public static ProductFull fromJson(JsonNode node) {
         if (node == null || !node.isObject()) return null;
         ProductFull pf = new ProductFull();

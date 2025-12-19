@@ -17,7 +17,7 @@ public class Example {
                 + ", issued in " + p.issuingCountry);
         } else {
             System.out.println("Not found");
-        }
+}
 
         System.out.println("Products for 'Bananaboat':");
         int page = 0;
