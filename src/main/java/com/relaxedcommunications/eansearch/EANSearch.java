@@ -2,6 +2,8 @@
  * Java class for EAN, GTIN, UPC and ISBN lookup and validation using the EAN-Search.org API.
  *
  * Copyright (c) 2025 Relaxed Communications GmbH <info@relaxedcommunications.com>
+ *
+ * License: MIT (https://opensource.org/licenses/MIT)
  */
 package com.relaxedcommunications.eansearch;
 
