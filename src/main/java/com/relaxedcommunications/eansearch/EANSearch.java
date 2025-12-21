@@ -28,6 +28,7 @@ import java.util.List;
  * </pre>
  */
 public class EANSearch {
+    private static final int MAX_API_TRIES = 3;
     private static final String API_HOST = "https://api.ean-search.org/api";
     private final String token;
     private final HttpClient client;
@@ -47,6 +48,10 @@ public class EANSearch {
      * @return JSON response body on success, or {@code null} on error
      */
     private String apiCall(String params) {
+        return apiCall(params, 1);
+    }
+
+    private String apiCall(String params, int tries) {
         String target = API_HOST + "?" + params + "&token=" + token + "&format=json";
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(target))
@@ -55,7 +60,10 @@ public class EANSearch {
                 .build();
         try {
             HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandlers.ofString());
-            if (resp.statusCode() >= 200 && resp.statusCode() < 300) {
+            if (resp.statusCode() == 429 && tries <= MAX_API_TRIES) {
+                return apiCall(params, tries + 1);
+            }
+            if (resp.statusCode() == 200) {
                 return resp.body();
             } else {
                 return null;
