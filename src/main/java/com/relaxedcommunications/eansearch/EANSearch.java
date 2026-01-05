@@ -1,7 +1,7 @@
 /*
  * Java class for EAN, GTIN, UPC and ISBN lookup and validation using the EAN-Search.org API.
  *
- * Copyright (c) 2025 Relaxed Communications GmbH <info@relaxedcommunications.com>
+ * Copyright (c) 2025-2026 Relaxed Communications GmbH <info@relaxedcommunications.com>
  *
  * License: MIT (https://opensource.org/licenses/MIT)
  */
@@ -92,7 +92,7 @@ public class EANSearch {
         }
     }
     public ProductFull barcodeLookup(String ean) {
-        return barcodeLookup(ean, 1);
+        return barcodeLookup(ean, Language.English);
     }
 
 
@@ -156,7 +156,7 @@ public class EANSearch {
     }
 
     public List<Product> productSearch(String name) {
-        return productSearch(name, 99, 0);
+        return productSearch(name, Language.Any, 0);
     }
 
     /**
@@ -179,7 +179,7 @@ public class EANSearch {
     }
 
     public List<Product> similarProductSearch(String name) {
-        return similarProductSearch(name, 99, 0);
+        return similarProductSearch(name,  Language.Any, 0);
     }
 
     /**
@@ -202,7 +202,7 @@ public class EANSearch {
     }
 
     public List<Product> categorySearch(int category, String name) {
-        return categorySearch(category, name, 99, 0);
+        return categorySearch(category, name,  Language.Any, 0);
     }
 
     /**
@@ -218,7 +218,7 @@ public class EANSearch {
     }
 
     public List<Product> barcodePrefixSearch(String prefix) { 
-        return barcodePrefixSearch(prefix, 1, 0);
+        return barcodePrefixSearch(prefix,  Language.English, 0);
     }
 
     /**

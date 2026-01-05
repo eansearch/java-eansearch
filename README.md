@@ -49,7 +49,7 @@ public class Example {
 
         // 1) barcodeLookup
         System.out.println("-- barcodeLookup --");
-        ProductFull p = client.barcodeLookup(sampleEan, 1);
+        ProductFull p = client.barcodeLookup(sampleEan, Language.English);
         if (p != null) {
             System.out.println(p.ean + " → " + p.name + " (category: " + p.categoryName + ", google category Id: " + p.googleCategoryId + ") issued in " + p.issuingCountry);
         } else {
@@ -70,14 +70,14 @@ public class Example {
 
         // 4) productSearch
         System.out.println("-- productSearch (exact match) --");
-        List<Product> products = client.productSearch("Bananaboat", 99, 0);
+        List<Product> products = client.productSearch("Bananaboat", Language.Any, 0);
         for (Product q : products) {
             System.out.println(q.ean + " → " + q.name + " (" + q.categoryName + ")");
         }
 
         // 5) similarProductSearch
         System.out.println("-- similarProductSearch --");
-        List<Product> similar = client.similarProductSearch("apple iphone withextratokenthatnevermatchesexact", 1);
+        List<Product> similar = client.similarProductSearch("apple iphone withextratokenthatnevermatchesexact", Language.English);
         for (Product r : similar) {
             System.out.println(r.ean + " → " + r.name);
         }
