@@ -105,6 +105,10 @@ public class Example {
         System.out.println("-- barcodeImage --");
         String img = client.barcodeImage(sampleEan, 300, 100);
         System.out.println("HTML: <img src=\"data:image/png;base64," + img + "\"");       
+
+        // 10) creditsRemaining
+        System.out.println("-- creditsRemaining --");
+        System.out.println("API credits remaining: " + client.creditsRemaining());
     }
 }
 ```
