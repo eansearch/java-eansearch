@@ -20,3 +20,7 @@ dependencies {
 
 // Compatible way to declare the main class for older/newer Gradle
 mainClassName = 'com.relaxedcommunications.eansearch.Example'
+
+javadoc {
+    destinationDir = file("${buildDir}/docs/javadoc")
+}

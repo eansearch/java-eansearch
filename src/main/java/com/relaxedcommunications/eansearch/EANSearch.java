@@ -79,7 +79,7 @@ public class EANSearch {
      * Lookup product details by EAN/barcode.
      *
      * @param ean EAN/UPC code as string
-     * @param language language id (0 = default)
+     * @param language preferred language for the product name (see @link Language)
      * @return {@link ProductFull} with extended product info, or {@code null} if not found/error
      */
     public ProductFull barcodeLookup(String ean, int language) {
@@ -139,7 +139,7 @@ public class EANSearch {
      * Search products by name.
      *
      * @param name product name or partial name
-     * @param onlyLanguage language id filter (0 = all)
+     * @param onlyLanguage language id filter (99 = any)
      * @param page pagination page index (0-based)
      * @return list of {@link Product} (empty list if none or on error)
      */
@@ -164,7 +164,10 @@ public class EANSearch {
     /**
      * Search for similar products by name.
      *
-     * @see #productSearch(String, int, int)
+     * @param name product name or partial name
+     * @param onlyLanguage language id filter (99 = any)
+     * @param page pagination page index (0-based)
+     * @return list of {@link Product} (empty list if none or on error)
      */
     public List<Product> similarProductSearch(String name, int onlyLanguage, int page) {
         try {
@@ -187,7 +190,11 @@ public class EANSearch {
     /**
      * Search products within a category.
      *
-     * @param category numeric category id
+     * @param category numeric category id (see appendix C in the API manual)
+     * @param name product name or partial name
+     * @param onlyLanguage language id filter (99 = any)
+     * @param page pagination page index (0-based)
+     * @return list of {@link Product} (empty list if none or on error)
      */
     public List<Product> categorySearch(int category, String name, int onlyLanguage, int page) {
                 try {
@@ -209,6 +216,11 @@ public class EANSearch {
 
     /**
      * Search products by barcode prefix.
+     *
+     * @param prefix the numeric prefix (at least 3 digits)
+     * @param language preferred language for the product name {@link Language}
+     * @param page pagination page index (0-based)
+     * @return list of {@link Product} (empty list if none or on error)
      */
     public List<Product> barcodePrefixSearch(String prefix, int language, int page) {
         String res = apiCall("op=barcode-prefix-search&prefix=" + prefix + "&language=" + language + "&page=" + page);
@@ -225,6 +237,9 @@ public class EANSearch {
 
     /**
      * Return the issuing country for a given EAN code (ISO code string).
+     *
+     * @param ean EAN code
+     * @return the 2-character country code
      */
     public String issuingCountryLookup(String ean) {
         String res = apiCall("op=issuing-country&ean=" + ean);
@@ -239,9 +254,12 @@ public class EANSearch {
     }
 
     /**
-     * Request a barcode image URL or data for the given EAN.
+     * Request a barcode image (PNG) for the given EAN.
      *
-     * @return encoded barcode string or empty on error
+     * @param ean EAN code
+     * @param width in pixel
+     * @param height in pixel
+     * @return base64 encoded image
      */
     public String barcodeImage(String ean, int width, int height) {
         String res = apiCall("op=barcode-image&ean=" + ean + "&width=" + width + "&height=" + height);
