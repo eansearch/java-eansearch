@@ -33,6 +33,7 @@ public class EANSearch {
     private final String token;
     private final HttpClient client;
     private final ObjectMapper mapper = new ObjectMapper();
+	private long remaining = -1;
 
     public EANSearch(String token) {
         this.token = token;
@@ -60,6 +61,7 @@ public class EANSearch {
                 .build();
         try {
             HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandlers.ofString());
+			remaining = resp.headers().firstValueAsLong("X-Credits-Remaining").orElse(-1);
             if (resp.statusCode() == 429 && tries <= MAX_API_TRIES) {
                 return apiCall(params, tries + 1);
             }
@@ -252,6 +254,18 @@ public class EANSearch {
             return "";
         }
     }
+
+    /**
+     * Request the remaining API credits.
+     *
+     * @return the remaining credits
+     */
+    public long creditsRemaining() {
+		if (remaining == -1) {
+			apiCall("op=account-status");
+		}
+		return remaining;
+	}
 
     /**
      * Parse a JSON product list response into {@link Product} objects.
